@@ -1,20 +1,35 @@
+from rest_framework import status
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics
-from rest_framework.permissions import AllowAny
 
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .serializers import RegisterSerializer, ProfileSerializer
+from .serializers import RegisterSerializer, UserSerializer
 
-from .models import User
 
-class RegisterView(generics.CreateAPIView):
-    queryset=User.objects.all()
-    serializer_class = RegisterSerializer
-    permission_classes= [AllowAny]
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
 
-class ProfileView(APIView):
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.save()
+
+            return Response(
+                UserSerializer(user).data,
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class MeView(APIView):
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        serializer = ProfileSerializer(request.user)
+        serializer = UserSerializer(request.user)
+
         return Response(serializer.data)

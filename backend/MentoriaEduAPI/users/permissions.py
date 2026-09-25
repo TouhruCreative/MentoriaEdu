@@ -2,7 +2,7 @@ from rest_framework.permissions import BasePermission
 
 
 class IsModerator(BasePermission):
-    message = "Доступ разрешён только модераторам."
+    message = "Permissions only for moderator"
 
     def has_permission(self, request, view):
         return (
