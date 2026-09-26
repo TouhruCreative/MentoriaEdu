@@ -21,4 +21,8 @@ urlpatterns = [
         TokenRefreshView.as_view(),
         name="token_refresh",
     ),
+    path(
+        "api/courses/", 
+        include("courses.urls"),
+    ),
 ]
