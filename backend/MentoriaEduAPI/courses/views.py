@@ -5,7 +5,6 @@ from .models import Course, Module, Lesson
 from .serializers import CourseSerializer, ModuleSerializer, LessonSerializer
 from .permissions import IsCourseAuthor, IsModuleAuthor, IsLessonCourseAuthor
 
-
 class CourseListCreateView(generics.ListCreateAPIView):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
@@ -22,6 +21,7 @@ class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
         IsAuthenticated,
         IsCourseAuthor,
     ]
+
 
 
 
