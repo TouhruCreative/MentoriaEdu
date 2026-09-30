@@ -21,6 +21,11 @@ class ExerciseSerializer(serializers.ModelSerializer):
             "id",
             "created_at",
         ]
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        if instance.lesson.module.course.author != self.context["request"].user:
+            data.pop('correct_answer')
+        return data
 
 
 class SubmissionSerializer(serializers.ModelSerializer):
