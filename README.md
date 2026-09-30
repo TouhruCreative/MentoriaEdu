@@ -6,4 +6,4 @@ TODO LIST:
 
  - [ ] Fix bug with create lessons in API
  - [ ] Update urls for cource/module/lesson
- - [ ] Drink coffie :)
+ - [x] Drink coffie :)
